@@ -1,4 +1,6 @@
-export const halloweenScenes = [
+import type { TScene } from "./types";
+
+export const halloweenScenes: TScene[] = [
   {
     key: "scene1",
     image: "/images/skeleton_sneeze.png",
@@ -31,7 +33,7 @@ export const halloweenScenes = [
       "A mummy making Halloween decorations out of leftover gauze.",
       "A mummy accidentally wrapping itself while packing a gift.",
     ],
-    correctOption: "A mummy wrapping Christmas gifts with its own bandages",
+    correctOption: "A mummy wrapping Christmas gifts with its own bandages.",
   },
   {
     key: "scene6",
@@ -42,7 +44,7 @@ export const halloweenScenes = [
       "A dancing pumpkin showing off at a Halloween party.",
       "A pumpkin-headed musician performing at a haunted club.",
     ],
-    correctOption: "A pumpkin-headed DJ spinning Halloween tunes",
+    correctOption: "A pumpkin-headed DJ spinning Halloween tunes.",
   },
   {
     key: "scene7",

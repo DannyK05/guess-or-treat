@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { halloweenScenes } from "../modules/game/data";
 import type { TScene } from "../modules/game/types";
 
