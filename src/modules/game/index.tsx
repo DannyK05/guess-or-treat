@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useRandomSets from "../../hooks/useRandomSets";
 import Button from "../../components/Button";
+import Hostage from "../../components/Hostage";
+import { Link } from "react-router";
 
 export default function Game() {
   const questions = useRandomSets();
 
   const [score, setScore] = useState(0);
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [currentIndex, setCurentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [hostageDistance, setHostageDistance] = useState(200);
 
   const handleMouse = (e: React.MouseEvent) => {
     setPosition({ x: e.clientX, y: e.clientY });
@@ -20,13 +23,23 @@ export default function Game() {
   const handleCorrectAnswer = () => {
     if (currentIndex < questions.length - 1) {
       setScore(score + 2);
-      setCurentIndex(currentIndex + 1);
+      setCurrentIndex(currentIndex + 1);
     }
   };
 
   const handleWrongAnswer = () => {
     setScore(score - 1);
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (hostageDistance > 0) {
+        setHostageDistance((prev) => Math.max(prev - 10, 0));
+      }
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [hostageDistance]);
 
   if (questions.length === 0) {
     return (
@@ -36,11 +49,14 @@ export default function Game() {
     );
   }
 
-  if (currentIndex == questions.length - 1) {
+  if (currentIndex == questions.length - 1 || hostageDistance == 0) {
     return (
       <div className="flex flex-col items-center justify-center h-screen text-orange-500 space-y-4">
-        <p className="text-2xl">🎃 Game Over!</p>
-        <p>Your final score: {score}</p>
+        <h1 className="text-4xl text-red-500 lg:text-6xl">🎃 Game Over!</h1>
+        <p className="text-xl">Your final score: {score}</p>
+        <Link to={"/"}>
+          <Button role="button">Back Home</Button>
+        </Link>
       </div>
     );
   }
@@ -48,9 +64,9 @@ export default function Game() {
   const currentQuestion = questions[currentIndex];
 
   return (
-    <div className="w-full flex flex-col items-center justify-between lg:flex-row">
+    <div className="w-full h-screen overflow-hidden flex flex-col items-center justify-between  lg:flex-row lg:h-screen">
       <div
-        className="relative w-1/2 h-screen overflow-hidden"
+        className="w-full h-1/2 relative overflow-hidden lg:w-1/2 lg:h-screen"
         onMouseMove={handleMouse}
         onTouchMove={handleTouch}
       >
@@ -61,31 +77,35 @@ export default function Game() {
         />
 
         <div
-          className="absolute inset-0"
           style={{
-            WebkitMaskImage: `radial-gradient(circle 120px at ${position.x}px ${position.y}px, transparent 0%, rgba(0,0,0,1) 100%)`,
-            maskImage: `radial-gradient(circle 120px at ${position.x}px ${position.y}px, transparent 0%, rgba(0,0,0,1) 100%)`,
+            position: "absolute",
+            inset: 0,
+            WebkitMaskImage: `radial-gradient(circle 120px at ${position.x}px ${position.y}px, transparent 0%,rgba(255,255,255,1) 80%, rgba(0,0,0,1) 100%)`,
+            maskImage: `radial-gradient(circle 120px at ${position.x}px ${position.y}px, transparent 0%,rgba(255,255,255,1) 80%, rgba(0,0,0,1) 100%)`,
             backgroundColor: "rgba(0, 0, 0, 1)",
           }}
         />
       </div>
 
-      <div className="w-1/2 border-l border-orange-500 h-screen flex items-center justify-center">
-        <div className="flex w-full items-center flex-col space-y-4">
-          <p className="text-red-500">Score: {score}</p>
+      <div className="w-full relative px-4 border-t border-orange-500 flex items-center justify-center overflow-y-scroll overflow-x-hidden lg:w-1/2 lg:h-screen lg:overflow-hidden lg:border-l lg:border-t-0">
+        <div className="flex w-full items-center flex-col pt-2 mt-[80px] space-y-4">
+          <h1 className="text-red-500 text-2xl lg:text-6xl">Score: {score}</h1>
+
           <p className="text-red-500">Guess Quickly</p>
+
+          <Hostage distance={hostageDistance} />
+
           <div className="grid grid-cols-2 gap-3">
             {currentQuestion.options.map((option, key) => (
               <Button
                 onClick={() => {
                   if (option === currentQuestion.correctOption) {
                     handleCorrectAnswer();
-                    console.log("clicked");
                   } else {
                     handleWrongAnswer();
                   }
                 }}
-                className="w-full"
+                className="w-full cursor-pointer"
                 key={key}
               >
                 {option}
