@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Butcherman";
+  src: url("../public/fonts/Butcherman/Butcherman-Regular.ttf");
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   height: 100%;
@@ -9,4 +14,8 @@ body {
   margin: 0;
   background-color: black;
   min-height: 100vh;
+}
+
+h1 {
+  font-family: "Butcherman";
 }
