@@ -5,6 +5,11 @@
   src: url("../public/fonts/Butcherman/Butcherman-Regular.ttf");
 }
 
+@font-face {
+  font-family: "Patrick";
+  src: url("../public/fonts/Patrick_Hand/PatrickHand-Regular.ttf");
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   height: 100%;
@@ -13,9 +18,10 @@
 body {
   margin: 0;
   background-color: black;
+  font-family: "Patrick", Arial, Helvetica, sans-serif;
   min-height: 100vh;
 }
 
 h1 {
-  font-family: "Butcherman";
+  font-family: "Butcherman", Arial, Helvetica, sans-serif;
 }

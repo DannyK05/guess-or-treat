@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router";
 import useRandomSets from "../../hooks/useRandomSets";
 import Button from "../../components/Button";
 import Hostage from "../../components/Hostage";
-import { Link } from "react-router";
 
 export default function Game() {
   const questions = useRandomSets();
@@ -22,13 +22,13 @@ export default function Game() {
 
   const handleCorrectAnswer = () => {
     if (currentIndex < questions.length - 1) {
-      setScore(score + 2);
+      setScore((score) => score + 2);
       setCurrentIndex(currentIndex + 1);
     }
   };
 
   const handleWrongAnswer = () => {
-    setScore(score - 1);
+    setScore((score) => score - 1);
   };
 
   useEffect(() => {
@@ -87,30 +87,36 @@ export default function Game() {
         />
       </div>
 
-      <div className="w-full relative px-4 border-t border-orange-500 flex items-center justify-center overflow-y-scroll overflow-x-hidden lg:w-1/2 lg:h-screen lg:overflow-hidden lg:border-l lg:border-t-0">
-        <div className="flex w-full items-center flex-col pt-2 mt-[80px] space-y-4">
-          <h1 className="text-red-500 text-2xl lg:text-6xl">Score: {score}</h1>
-
-          <p className="text-red-500">Guess Quickly</p>
-
+      <div className="w-full h-[45%s] relative px-4 border-t border-orange-500 flex items-center justify-center overflow-y-scroll overflow-x-hidden lg:w-1/2 lg:h-screen lg:overflow-hidden lg:border-l lg:border-t-0">
+        <div className="flex w-full items-center flex-col pt-2">
+          <h1 className="text-red-500 text-6xl">Save Bob</h1>
           <Hostage distance={hostageDistance} />
+          <div className="flex w-full items-center flex-col pt-2 lg:mt-10 space-y-4">
+            <p className="text-orange-500 text-2xl lg:text-6xl">
+              Score: {score}
+            </p>
 
-          <div className="grid grid-cols-2 gap-3">
-            {currentQuestion.options.map((option, key) => (
-              <Button
-                onClick={() => {
-                  if (option === currentQuestion.correctOption) {
-                    handleCorrectAnswer();
-                  } else {
-                    handleWrongAnswer();
-                  }
-                }}
-                className="w-full cursor-pointer"
-                key={key}
-              >
-                {option}
-              </Button>
-            ))}
+            <h1 className="hidden text-red-500 text-xl lg:block">
+              Guess Quickly
+            </h1>
+
+            <div className="grid grid-cols-2 gap-3">
+              {currentQuestion.options.map((option, key) => (
+                <Button
+                  onClick={() => {
+                    if (option === currentQuestion.correctOption) {
+                      handleCorrectAnswer();
+                    } else {
+                      handleWrongAnswer();
+                    }
+                  }}
+                  className="w-full cursor-pointer"
+                  key={key}
+                >
+                  {option}
+                </Button>
+              ))}
+            </div>
           </div>
         </div>
       </div>
