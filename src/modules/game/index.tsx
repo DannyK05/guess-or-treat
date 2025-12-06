@@ -12,6 +12,8 @@ export default function Game() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hostageDistance, setHostageDistance] = useState(200);
 
+  const currentQuestion = questions[currentIndex];
+
   const handleMouse = (e: React.MouseEvent) => {
     setPosition({ x: e.clientX, y: e.clientY });
   };
@@ -22,13 +24,13 @@ export default function Game() {
 
   const handleCorrectAnswer = () => {
     if (currentIndex < questions.length - 1) {
-      setScore((score) => score + 2);
-      setCurrentIndex(currentIndex + 1);
+      setScore((prev) => prev + 2);
+      setCurrentIndex((prev) => prev + 1);
     }
   };
 
   const handleWrongAnswer = () => {
-    setScore((score) => score - 1);
+    setScore((prev) => prev - 1);
   };
 
   useEffect(() => {
@@ -55,13 +57,13 @@ export default function Game() {
         <h1 className="text-4xl text-red-500 lg:text-6xl">🎃 Game Over!</h1>
         <p className="text-xl">Your final score: {score}</p>
         <Link to={"/"}>
-          <Button role="button">Back Home</Button>
+          <Button className="cursor-pointer" role="button">
+            Back Home
+          </Button>
         </Link>
       </div>
     );
   }
-
-  const currentQuestion = questions[currentIndex];
 
   return (
     <div className="w-full h-screen overflow-hidden flex flex-col items-center justify-between  lg:flex-row lg:h-screen">
