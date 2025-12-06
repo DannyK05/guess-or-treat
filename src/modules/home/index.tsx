@@ -24,6 +24,7 @@ export default function Home() {
         height={500}
         src="/svgs/bat.svg"
         alt="Bat"
+        fetchPriority="high"
       />
 
       <img

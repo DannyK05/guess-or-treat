@@ -76,6 +76,7 @@ export default function Game() {
           src={currentQuestion.image}
           alt={currentQuestion.key}
           className="w-full h-full"
+          fetchPriority="high"
         />
 
         <div
