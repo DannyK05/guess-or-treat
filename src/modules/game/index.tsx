@@ -77,6 +77,8 @@ export default function Game() {
           alt={currentQuestion.key}
           className="w-full h-full"
           fetchPriority="high"
+          width={854}
+          height={854}
         />
 
         <div
