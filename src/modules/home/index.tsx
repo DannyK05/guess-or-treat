@@ -4,7 +4,7 @@ import Button from "../../components/Button";
 export default function Home() {
   return (
     <div className="relative w-full h-screen overflow-hidden flex items-center justify-center">
-      <div className="flex-col space-y-8 flex items-center px-6 bg-black">
+      <div className="flex-col z-10 space-y-8 flex items-center px-6">
         <h1 className="text-8xl text-center text-orange-500">
           Guess <br />
           <span className="text-white">or</span>
@@ -12,7 +12,7 @@ export default function Home() {
         </h1>
 
         <Link to={"/game"}>
-          <Button className="text-lg cursor-pointer z-10" role="button">
+          <Button className="text-lg cursor-pointer" role="button">
             Play
           </Button>
         </Link>
