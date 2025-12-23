@@ -12,7 +12,7 @@ export default function Home() {
         </h1>
 
         <Link to={"/game"}>
-          <Button className="text-lg cursor-pointer" role="button">
+          <Button className="text-lg cursor-pointer z-10" role="button">
             Play
           </Button>
         </Link>
