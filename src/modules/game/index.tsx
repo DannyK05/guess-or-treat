@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useRandomSets from "../../hooks/useRandomSets";
 import Button from "../../components/Button";
 import Hostage from "../../components/Hostage";
@@ -7,6 +7,9 @@ import GameOver from "./components/GameOver";
 
 export default function Game() {
   const questions = useRandomSets();
+
+  const correctAudioRef = useRef<HTMLAudioElement | null>(null);
+  const wrongAudioRef = useRef<HTMLAudioElement | null>(null);
 
   const [score, setScore] = useState(0);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -28,11 +31,17 @@ export default function Game() {
       setScore((prev) => prev + 2);
       setCurrentIndex((prev) => prev + 1);
     }
+    if (correctAudioRef) {
+      correctAudioRef?.current?.play();
+    }
   };
 
   const handleWrongAnswer = () => {
     if (score > 0) {
       setScore((prev) => prev - 1);
+    }
+    if (wrongAudioRef) {
+      wrongAudioRef?.current?.play();
     }
   };
 
@@ -44,10 +53,10 @@ export default function Game() {
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [hostageDistance]);
+  }, []);
 
   if (currentIndex == questions.length - 1 || hostageDistance == 0) {
-    if (score > 18) {
+    if (score > 7) {
       return <Win score={score} />;
     } else {
       return <GameOver score={score} />;
@@ -114,6 +123,22 @@ export default function Game() {
           </div>
         </div>
       </div>
+
+      <audio autoPlay loop>
+        <source src="/audio/lone-wolf-howling.wav" type="audio/wav" />
+      </audio>
+
+      <audio autoPlay loop>
+        <source src="/audio/scary-graveyard-wind.wav" type="audio/wav" />
+      </audio>
+
+      <audio ref={correctAudioRef}>
+        <source src="/audio/correct-tone.wav" type="audio/wav" />
+      </audio>
+
+      <audio ref={wrongAudioRef}>
+        <source src="/audio/wrong-tone.wav" type="audio/wav" />
+      </audio>
     </div>
   );
 }
