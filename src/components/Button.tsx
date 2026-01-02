@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { twJoin } from "tailwind-merge";
+import { twMerge } from "tailwind-merge";
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   className?: string;
@@ -9,9 +9,9 @@ export default function Button({ className, children, ...props }: ButtonProps) {
   return (
     <button
       {...props}
-      className={twJoin(
-        className,
-        "text-white text-sm h-20 w-40 font-medium border border-orange-500 active:bg-orange-500 lg:text-xl"
+      className={twMerge(
+        "flex items-center justify-center text-white text-sm h-20 w-40 font-medium border border-orange-500 active:bg-orange-500 lg:text-xl",
+        className
       )}
     >
       {children}

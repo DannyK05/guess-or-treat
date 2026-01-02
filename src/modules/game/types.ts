@@ -4,3 +4,9 @@ export type TScene = {
   options: string[];
   correctOption: string;
 };
+
+export type TScreenProps = {
+  score: number;
+  isMusicOn?: boolean;
+  isSoundOn?: boolean;
+};

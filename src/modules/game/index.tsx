@@ -4,6 +4,7 @@ import Button from "../../components/Button";
 import Hostage from "../../components/Hostage";
 import Win from "./components/Win";
 import GameOver from "./components/GameOver";
+import { Music, Speaker } from "lucide-react";
 
 export default function Game() {
   const questions = useRandomSets();
@@ -13,6 +14,8 @@ export default function Game() {
 
   const [score, setScore] = useState(0);
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isMusicOn, setIsMusicOn] = useState(true);
+  const [isSoundOn, setIsSoundOn] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hostageDistance, setHostageDistance] = useState(200);
 
@@ -45,6 +48,9 @@ export default function Game() {
     }
   };
 
+  const handleMusic = () => setIsMusicOn(!isMusicOn);
+  const handleSound = () => setIsSoundOn(!isSoundOn);
+
   useEffect(() => {
     const interval = setInterval(() => {
       if (hostageDistance > 0) {
@@ -57,14 +63,23 @@ export default function Game() {
 
   if (currentIndex == questions.length - 1 || hostageDistance == 0) {
     if (score > 7) {
-      return <Win score={score} />;
+      return <Win score={score} isMusicOn={isMusicOn} />;
     } else {
-      return <GameOver score={score} />;
+      return <GameOver score={score} isMusicOn={isMusicOn} />;
     }
   }
 
   return (
     <div className="w-full h-screen overflow-hidden flex flex-col items-center justify-between  lg:flex-row lg:h-screen">
+      <div className="absolute z-10 flex flex-col items-end right-0 top-0">
+        <Button className="w-15" onClick={handleMusic}>
+          <Speaker color={isMusicOn ? "#FF6900" : "#FFFF"} />
+        </Button>
+
+        <Button className="w-15" onClick={handleSound}>
+          <Music color={isSoundOn ? "#FF6900" : "#FFFF"} />
+        </Button>
+      </div>
       <div
         className="w-full h-1/2 relative overflow-hidden lg:w-1/2 lg:h-screen"
         onMouseMove={handleMouse}
@@ -124,19 +139,19 @@ export default function Game() {
         </div>
       </div>
 
-      <audio autoPlay loop>
+      <audio autoPlay loop muted={!isMusicOn}>
         <source src="/audio/lone-wolf-howling.wav" type="audio/wav" />
       </audio>
 
-      <audio autoPlay loop>
+      <audio autoPlay loop muted={!isMusicOn}>
         <source src="/audio/scary-graveyard-wind.wav" type="audio/wav" />
       </audio>
 
-      <audio ref={correctAudioRef}>
+      <audio ref={correctAudioRef} muted={!isSoundOn}>
         <source src="/audio/correct-tone.wav" type="audio/wav" />
       </audio>
 
-      <audio ref={wrongAudioRef}>
+      <audio ref={wrongAudioRef} muted={!isSoundOn}>
         <source src="/audio/wrong-tone.wav" type="audio/wav" />
       </audio>
     </div>
