@@ -70,16 +70,17 @@ export default function Game() {
   }
 
   return (
-    <div className="w-full h-screen overflow-hidden flex flex-col items-center justify-between  lg:flex-row lg:h-screen">
-      <div className="absolute z-10 flex flex-col items-end right-0 top-0">
-        <Button className="w-15" onClick={handleMusic}>
+    <div className="w-full h-screen overflow-hidden flex flex-col items-center justify-between lg:flex-row lg:h-screen">
+      <div className="absolute z-10 flex flex-row items-end right-0 top-0 lg:flex-col">
+        <Button className="w-15 h-15" onClick={handleMusic}>
           <Speaker color={isMusicOn ? "#FF6900" : "#FFFF"} />
         </Button>
 
-        <Button className="w-15" onClick={handleSound}>
+        <Button className="w-15 h-15" onClick={handleSound}>
           <Music color={isSoundOn ? "#FF6900" : "#FFFF"} />
         </Button>
       </div>
+
       <div
         className="w-full h-1/2 relative overflow-hidden lg:w-1/2 lg:h-screen"
         onMouseMove={handleMouse}
@@ -105,7 +106,7 @@ export default function Game() {
         />
       </div>
 
-      <div className="w-full h-[45%s] relative px-4 border-t border-orange-500 flex items-center justify-center overflow-y-scroll overflow-x-hidden lg:w-1/2 lg:h-screen lg:overflow-hidden lg:border-l lg:border-t-0">
+      <div className="w-full h-[45%] relative px-4 border-t border-orange-500 flex items-center justify-center overflow-y-scroll overflow-x-hidden lg:w-1/2 lg:h-screen lg:overflow-hidden lg:border-l lg:border-t-0">
         <div className="flex w-full items-center flex-col pt-2">
           <h1 className="text-red-500 text-6xl">Save Bob</h1>
           <Hostage distance={hostageDistance} />

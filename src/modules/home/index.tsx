@@ -16,6 +16,9 @@ export default function Home() {
             Play
           </Button>
         </Link>
+        <p className="text-xl text-white lg:hidden md:hidden">
+          Tip: Best played on PC
+        </p>
       </div>
 
       <img
