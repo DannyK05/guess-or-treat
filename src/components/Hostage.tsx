@@ -15,7 +15,7 @@ export default function Hostage({ distance }: { distance: number }) {
         style={{ position: "absolute", right: "0px" }}
         width={80}
         height={80}
-        src="/svgs/person.svg"
+        src="/gifs/run_anim.gif"
         alt="Person"
       />
     </div>

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
 import useRandomSets from "../../hooks/useRandomSets";
 import Button from "../../components/Button";
 import Hostage from "../../components/Hostage";
+import Win from "./components/Win";
+import GameOver from "./components/GameOver";
 
 export default function Game() {
   const questions = useRandomSets();
@@ -30,7 +31,9 @@ export default function Game() {
   };
 
   const handleWrongAnswer = () => {
-    setScore((prev) => prev - 1);
+    if (score > 0) {
+      setScore((prev) => prev - 1);
+    }
   };
 
   useEffect(() => {
@@ -43,26 +46,12 @@ export default function Game() {
     return () => clearInterval(interval);
   }, [hostageDistance]);
 
-  if (questions.length === 0) {
-    return (
-      <div className="flex items-center justify-center h-screen text-xl text-orange-500">
-        Summoning spooky questions...
-      </div>
-    );
-  }
-
   if (currentIndex == questions.length - 1 || hostageDistance == 0) {
-    return (
-      <div className="flex flex-col items-center justify-center h-screen text-orange-500 space-y-4">
-        <h1 className="text-4xl text-red-500 lg:text-6xl">🎃 Game Over!</h1>
-        <p className="text-xl">Your final score: {score}</p>
-        <Link to={"/"}>
-          <Button className="cursor-pointer" role="button">
-            Back Home
-          </Button>
-        </Link>
-      </div>
-    );
+    if (score > 18) {
+      return <Win score={score} />;
+    } else {
+      return <GameOver score={score} />;
+    }
   }
 
   return (
